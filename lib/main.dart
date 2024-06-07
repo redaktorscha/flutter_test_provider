@@ -8,6 +8,14 @@ void main() {
 
 final countProvider = StateProvider<int>((ref) => 0);
 
+void increment(StateController<int> counter) {
+  counter.state += 1;
+}
+
+void decrement(StateController<int> counter) {
+  counter.state -= 1;
+}
+
 class App extends StatelessWidget {
   const App({super.key});
 
@@ -55,12 +63,12 @@ class IncrementButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // В этом случае нет необходимости прослушивать изменения
-    final count = ref.read(countProvider.notifier);
+    final counter = ref.read(countProvider.notifier);
 
     return IconButton(
       icon: const Icon(Icons.add, size: 12),
       onPressed: () {
-        count.state++;
+        increment(counter);
       },
     );
   }
@@ -72,13 +80,13 @@ class DecrementButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // В этом случае нет необходимости прослушивать изменения
-    final count = ref.read(countProvider.notifier);
+    final counter = ref.read(countProvider.notifier);
 
     return IconButton(
       icon: const Icon(Icons.remove, size: 12),
       onPressed: () {
         // Это вызовет изменение состояния, в результате чего прослушивающие виджеты будут перестроены
-        count.state--;
+        decrement(counter);
       },
     );
   }
