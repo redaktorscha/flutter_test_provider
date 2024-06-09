@@ -6,15 +6,20 @@ void main() {
   runApp(const ProviderScope(child: App()));
 }
 
-final countProvider = StateProvider<int>((ref) => 0);
+class CounterModel extends StateNotifier<int> {
+  CounterModel() : super(0);
 
-void increment(StateController<int> counter) {
-  counter.state += 1;
+  void increment() {
+    state += 1;
+  }
+
+  void decrement() {
+    state -= 1;
+  }
 }
 
-void decrement(StateController<int> counter) {
-  counter.state -= 1;
-}
+final countProvider =
+    StateNotifierProvider<CounterModel, int>((ref) => CounterModel());
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -41,18 +46,21 @@ class App extends StatelessWidget {
   }
 }
 
-class CounterView extends ConsumerWidget {
+class CounterView extends StatelessWidget {
   const CounterView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // var counter = Provider.of<CounterModel>(context);
-    final count = ref.watch(countProvider);
-    print(count);
+  Widget build(BuildContext context) {
+    return Consumer(
+      builder: (context, ref, child) {
+        final count = ref.watch(countProvider);
+        print(count);
 
-    return Text(
-      '$count',
-      style: const TextStyle(color: Colors.purple),
+        return Text(
+          '$count',
+          style: const TextStyle(color: Colors.purple),
+        );
+      },
     );
   }
 }
@@ -68,7 +76,7 @@ class IncrementButton extends ConsumerWidget {
     return IconButton(
       icon: const Icon(Icons.add, size: 12),
       onPressed: () {
-        increment(counter);
+        counter.increment();
       },
     );
   }
@@ -86,7 +94,7 @@ class DecrementButton extends ConsumerWidget {
       icon: const Icon(Icons.remove, size: 12),
       onPressed: () {
         // Это вызовет изменение состояния, в результате чего прослушивающие виджеты будут перестроены
-        decrement(counter);
+        counter.decrement();
       },
     );
   }
