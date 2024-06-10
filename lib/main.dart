@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import './screens/home.dart';
 // import './models/user_model.dart';
 
-void main() async {
+void main() {
   // Добавление ProviderScope позволяет использовать Riverpod для всего проекта
   runApp(const ProviderScope(child: App()));
 
