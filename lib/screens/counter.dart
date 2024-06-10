@@ -1,6 +1,8 @@
+import 'package:fl_test2/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/counter_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CounterScreen extends StatelessWidget {
   const CounterScreen({super.key});
@@ -68,6 +70,10 @@ class IncrementButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    //доступиться до другого провайдера
+
+    final user = ref.watch(userProvider);
+    print('name: ${user.name}');
     // В этом случае нет необходимости прослушивать изменения
     final counter = ref.read(provider.notifier);
 
