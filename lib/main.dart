@@ -4,15 +4,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import './screens/home.dart';
 // import './models/user_model.dart';
 
-void main() {
-  // Добавление ProviderScope позволяет использовать Riverpod для всего проекта
-  runApp(const ProviderScope(child: App()));
+// final userProvider = Provider((ref) => User('john wick'));
 
-  // как доступиться к стейту вне дерева виджетов
+void main() {
+  // можно доступиться до стейта вне дерева виджетов, чтобы что-то отлогировать
+  // final container = ProviderContainer();
+  // final user = container.read(userProvider);
+  // print('name: ${user.name}');
+
+  // проинициализировать стейт перед запуском приложения вне дерева виджетов
   // final container = ProviderContainer();
 
   // await container.read(userProvider.notifier).fetchUser();
   // runApp(UncontrolledProviderScope(container: container, child: const App()));
+
+  // Добавление ProviderScope позволяет использовать Riverpod для всего проекта
+  runApp(const ProviderScope(child: App()));
 }
 
 class App extends StatelessWidget {
