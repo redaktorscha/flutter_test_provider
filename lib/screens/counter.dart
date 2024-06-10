@@ -18,43 +18,39 @@ class CounterScreen extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const IncrementButton1(),
-              const CounterView1(),
-              const DecrementButton1(),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Go Home'))
+              IncrementButton(provider: countProvider1),
+              CounterView(provider: countProvider1),
+              DecrementButton(provider: countProvider1),
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const IncrementButton2(),
-              const CounterView2(),
-              const DecrementButton2(),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Go Home'))
+              IncrementButton(provider: countProvider2),
+              CounterView(provider: countProvider2),
+              DecrementButton(provider: countProvider2),
             ],
           ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Go Home'))
         ],
       )),
     );
   }
 }
 
-class CounterView1 extends StatelessWidget {
-  const CounterView1({super.key});
+class CounterView extends StatelessWidget {
+  const CounterView({super.key, required this.provider});
+  final StateNotifierProvider<CounterModel, int> provider;
 
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
-        final count = ref.watch(countProvider1);
+        final count = ref.watch(provider);
         print(count);
 
         return Text(
@@ -66,32 +62,14 @@ class CounterView1 extends StatelessWidget {
   }
 }
 
-class CounterView2 extends StatelessWidget {
-  const CounterView2({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, ref, child) {
-        final count = ref.watch(countProvider2);
-        print(count);
-
-        return Text(
-          '$count',
-          style: const TextStyle(color: Colors.purple),
-        );
-      },
-    );
-  }
-}
-
-class IncrementButton1 extends ConsumerWidget {
-  const IncrementButton1({super.key});
+class IncrementButton extends ConsumerWidget {
+  const IncrementButton({super.key, required this.provider});
+  final StateNotifierProvider<CounterModel, int> provider;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // В этом случае нет необходимости прослушивать изменения
-    final counter = ref.read(countProvider1.notifier);
+    final counter = ref.read(provider.notifier);
 
     return IconButton(
       icon: const Icon(Icons.add, size: 12),
@@ -102,48 +80,14 @@ class IncrementButton1 extends ConsumerWidget {
   }
 }
 
-class IncrementButton2 extends ConsumerWidget {
-  const IncrementButton2({super.key});
+class DecrementButton extends ConsumerWidget {
+  const DecrementButton({super.key, required this.provider});
+  final StateNotifierProvider<CounterModel, int> provider;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // В этом случае нет необходимости прослушивать изменения
-    final counter = ref.read(countProvider2.notifier);
-
-    return IconButton(
-      icon: const Icon(Icons.add, size: 12),
-      onPressed: () {
-        counter.increment();
-      },
-    );
-  }
-}
-
-class DecrementButton1 extends ConsumerWidget {
-  const DecrementButton1({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // В этом случае нет необходимости прослушивать изменения
-    final counter = ref.read(countProvider1.notifier);
-
-    return IconButton(
-      icon: const Icon(Icons.remove, size: 12),
-      onPressed: () {
-        // Это вызовет изменение состояния, в результате чего прослушивающие виджеты будут перестроены
-        counter.decrement();
-      },
-    );
-  }
-}
-
-class DecrementButton2 extends ConsumerWidget {
-  const DecrementButton2({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // В этом случае нет необходимости прослушивать изменения
-    final counter = ref.read(countProvider2.notifier);
+    final counter = ref.read(provider.notifier);
 
     return IconButton(
       icon: const Icon(Icons.remove, size: 12),
