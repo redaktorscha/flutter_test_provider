@@ -12,5 +12,8 @@ class CounterModel extends StateNotifier<int> {
   }
 }
 
-final countProvider =
+final countProvider1 =
+    StateNotifierProvider<CounterModel, int>((ref) => CounterModel());
+
+final countProvider2 =
     StateNotifierProvider<CounterModel, int>((ref) => CounterModel());
