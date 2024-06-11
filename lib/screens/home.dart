@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'counter.dart';
 import 'user.dart';
+import 'todo.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,14 +17,28 @@ class HomeScreen extends StatelessWidget {
           children: <Widget>[
             ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const CounterScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CounterScreen()));
                 },
                 child: const Text('Go to Counter Screen')),
-            ElevatedButton(onPressed: () {
-               Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const UserScreen()));
-            }, child: const Text('Go to User Screen')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const TodoScreen()));
+                },
+                child: const Text('Go to todo Screen')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const UserScreen()));
+                },
+                child: const Text('Go to User Screen')),
           ],
         )));
   }
